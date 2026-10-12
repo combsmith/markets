@@ -101,7 +101,7 @@ ROLES=(dev-lead pr-auto-review pr-review pr-review-mention ci-failure-analyst)
   [[ "$output" == *"/pr-review-mention-reusable.yml@pr-review-mention/v2-stable" ]]
   run yq '.jobs.ci-failure-analyst.uses' "$WORKFLOW"
   [ "$status" -eq 0 ]
-  [[ "$output" == *"/ci-failure-analyst-reusable.yml@b58510275dd1cbbd13c0733c15265d51fd63b992" ]]
+  [[ "$output" == *"/ci-failure-analyst-reusable.yml@ci-failure-analyst/v1-stable" ]]
 }
 
 @test "dev-lead job keeps the base=main PR filter and declares no caller concurrency" {
@@ -149,7 +149,7 @@ ROLES=(dev-lead pr-auto-review pr-review pr-review-mention ci-failure-analyst)
   run yq '.jobs.ci-failure-analyst.if' "$WORKFLOW"
   [[ "$output" == *"github.event_name == 'check_run'"* ]]
   [[ "$output" == *"github.event.check_run.conclusion == 'failure'"* ]]
-  [[ "$output" == *"!startsWith(github.event.check_run.name, 'CI Failure Analyst')"* ]]
+  [[ "$output" == *"!startsWith(github.event.check_run.name, 'ci-failure-analyst')"* ]]
 }
 
 @test "if: guards never read repo state (vars/secrets/needs/hashFiles)" {
@@ -166,5 +166,25 @@ ROLES=(dev-lead pr-auto-review pr-review pr-review-mention ci-failure-analyst)
   run grep -E '/pr-review\.yml@' "$WORKFLOW"
   [ "$status" -eq 0 ]
   [[ "$output" =~ @pr-review/v1-stable[[:space:]]+#[[:space:]]*NOSONAR\(githubactions:S7637\)[[:space:]]+first-party[[:space:]]+channel[[:space:]]+ref ]]
+  [[ "$output" != *"DEFECTIVE PIN"* ]]
+}
+
+@test "ci-failure-analyst loop guard matches the analyst's own check run name (#2175)" {
+  # A reusable-workflow job's check run is named '<caller job> / <reusable job>',
+  # so the analyst's own check is 'ci-failure-analyst / analyze'. The guard must
+  # match that prefix, or a failed analyst run re-triggers the analyst.
+  run yq '.jobs.ci-failure-analyst.if' "$WORKFLOW"
+  [ "$status" -eq 0 ]
+  local prefix
+  prefix="$(printf '%s' "$output" | sed -n "s/.*!startsWith(github.event.check_run.name, '\([^']*\)').*/\1/p")"
+  [ -n "$prefix" ]
+  # The reusable's job id is 'analyze' (ci-failure-analyst-reusable.yml).
+  [[ 'ci-failure-analyst / analyze' == "$prefix"* ]]
+}
+
+@test "ci-failure-analyst pins its channel, not a bare SHA (#2176)" {
+  run grep -E '/ci-failure-analyst-reusable\.yml@' "$WORKFLOW"
+  [ "$status" -eq 0 ]
+  [[ "$output" =~ @ci-failure-analyst/v1-stable[[:space:]]+#[[:space:]]*NOSONAR\(githubactions:S7637\)[[:space:]]+first-party[[:space:]]+channel[[:space:]]+ref ]]
   [[ "$output" != *"DEFECTIVE PIN"* ]]
 }
