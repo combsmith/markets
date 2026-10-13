@@ -4,10 +4,12 @@
 # Stack: {test_stack_type} | Framework: {test_framework}
 #
 # Variables to customize per project:
-#   INSTALL_CMD       - dependency install command (e.g., npm ci, pnpm install --frozen-lockfile)
+#   INSTALL_CMD       - dependency install command (e.g., npm ci --ignore-scripts, pnpm install --frozen-lockfile --ignore-scripts)
 #   TEST_CMD          - main test command (e.g., npm run test:e2e, npm test, npx vitest)
 #   LINT_CMD          - lint command (e.g., npm run lint)
-#   BROWSER_INSTALL   - browser install command (frontend/fullstack only; omit for backend)
+#   BROWSER_INSTALL   - browser install command using the lockfile-pinned local binary
+#                       (e.g., ./node_modules/.bin/playwright install --with-deps chromium;
+#                       frontend/fullstack only; omit for backend)
 #   DEFAULT_NODE_VERSION - Node.js version (read from .nvmrc or default to 24)
 
 trigger:
@@ -51,7 +53,7 @@ stages:
               path: $(npm_config_cache)
             displayName: "Cache npm"
 
-          - script: npm ci
+          - script: npm ci --ignore-scripts
             displayName: "Install dependencies" # Replace with INSTALL_CMD
 
           - script: npm run lint
@@ -90,11 +92,11 @@ stages:
               path: $(npm_config_cache)
             displayName: "Cache npm"
 
-          - script: npm ci
+          - script: npm ci --ignore-scripts
             displayName: "Install dependencies" # Replace with INSTALL_CMD
 
           # Frontend/Fullstack only — skipped for backend-only stacks
-          - script: npx playwright install --with-deps chromium
+          - script: ./node_modules/.bin/playwright install --with-deps chromium
             condition: ne(variables['TEST_STACK_TYPE'], 'backend')
             displayName: "Install Playwright browsers" # Replace with BROWSER_INSTALL
 
@@ -132,11 +134,11 @@ stages:
               versionSpec: $(DEFAULT_NODE_VERSION)
             displayName: "Setup Node.js"
 
-          - script: npm ci
+          - script: npm ci --ignore-scripts
             displayName: "Install dependencies" # Replace with INSTALL_CMD
 
           # Frontend/Fullstack only — skipped for backend-only stacks
-          - script: npx playwright install --with-deps chromium
+          - script: ./node_modules/.bin/playwright install --with-deps chromium
             condition: ne(variables['TEST_STACK_TYPE'], 'backend')
             displayName: "Install Playwright browsers" # Replace with BROWSER_INSTALL
 
