@@ -31,7 +31,7 @@ set -euo pipefail
 REPO="petry-projects/markets"
 RULESET_NAME="code-quality"
 
-if [ -z "${GH_TOKEN:-}" ]; then
+if [[ -z "${GH_TOKEN:-}" ]]; then
   echo "ERROR: GH_TOKEN is required with administration:write scope" >&2
   exit 1
 fi
@@ -52,7 +52,7 @@ REQUIRED_BYPASS_ACTORS=$(jq -n \
 
 # When updating an existing ruleset, fetch its current bypass actors and merge them
 # with the required actors so that other legitimate bypass actors are not silently removed.
-if [ -n "$EXISTING_ID" ]; then
+if [[ -n "$EXISTING_ID" ]]; then
   EXISTING_BYPASS=$(gh api "repos/$REPO/rulesets/$EXISTING_ID" \
     --jq '.bypass_actors // []' 2>/dev/null || echo "[]")
   BYPASS_ACTORS=$(echo "$EXISTING_BYPASS" | \
@@ -92,7 +92,7 @@ PAYLOAD=$(jq -n --argjson bypass_actors "$BYPASS_ACTORS" '{
   bypass_actors: $bypass_actors
 }')
 
-if [ -n "$EXISTING_ID" ]; then
+if [[ -n "$EXISTING_ID" ]]; then
   echo "Updating existing $RULESET_NAME ruleset (id=$EXISTING_ID) ..."
   echo "$PAYLOAD" | gh api -X PUT "repos/$REPO/rulesets/$EXISTING_ID" --input - > /dev/null
   echo "Done — ruleset updated: https://github.com/$REPO/rules/$EXISTING_ID"

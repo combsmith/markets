@@ -36,7 +36,7 @@ set -euo pipefail
 REPO="petry-projects/markets"
 RULESET_NAME="pr-quality"
 
-if [ -z "${GH_TOKEN:-}" ]; then
+if [[ -z "${GH_TOKEN:-}" ]]; then
   echo "ERROR: GH_TOKEN is required with administration:write scope" >&2
   exit 1
 fi
@@ -83,7 +83,7 @@ PAYLOAD=$(jq -n '{
   ]
 }')
 
-if [ -n "$EXISTING_ID" ]; then
+if [[ -n "$EXISTING_ID" ]]; then
   echo "Updating existing $RULESET_NAME ruleset (id=$EXISTING_ID) ..."
   echo "$PAYLOAD" | gh api -X PUT "repos/$REPO/rulesets/$EXISTING_ID" --input - > /dev/null
   echo "Done — ruleset updated: https://github.com/$REPO/rules/$EXISTING_ID"
