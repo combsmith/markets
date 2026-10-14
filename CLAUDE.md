@@ -1,6 +1,6 @@
 # Markets — Claude Code Instructions
 
-> **Read the [petry-projects org AGENTS.md](https://github.com/petry-projects/.github/blob/main/AGENTS.md) and then [Agents.md](Agents.md).** The org file defines cross-cutting standards (TDD, SOLID, CLEAN, DRY, DDD, KISS, YAGNI, CI gates, BMAD). The project Agents.md contains Markets-specific technology stack, component organization, styling rules, naming conventions, accessibility requirements, mobile UX constraints, event-driven architecture rules, and anti-patterns. For detailed principle application (bounded contexts, aggregates, typed IDs, test strategy, coverage thresholds), see `_bmad-output/planning-artifacts/coding-standards.md`.
+> **Read the [combsmith org AGENTS.md](https://github.com/combsmith/.github/blob/main/AGENTS.md) and then [Agents.md](Agents.md).** The org file defines cross-cutting standards (TDD, SOLID, CLEAN, DRY, DDD, KISS, YAGNI, CI gates, BMAD). The project Agents.md contains Markets-specific technology stack, component organization, styling rules, naming conventions, accessibility requirements, mobile UX constraints, event-driven architecture rules, and anti-patterns. For detailed principle application (bounded contexts, aggregates, typed IDs, test strategy, coverage thresholds), see `_bmad-output/planning-artifacts/coding-standards.md`.
 
 ## Figma MCP Integration Rules
 

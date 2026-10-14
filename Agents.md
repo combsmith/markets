@@ -1,6 +1,6 @@
 # Markets — Project Coding Standards
 
-> This file extends the **[petry-projects organization AGENTS.md](https://github.com/petry-projects/.github/blob/main/AGENTS.md)** with Markets-specific conventions. The org standards define TDD, SOLID, CLEAN, DRY, DDD, KISS, YAGNI, pre-commit checks, CI gates, BMAD workflows, and multi-agent isolation. This file does not restate those — it specifies how they apply to this project's Go + React Native/Expo stack. If a rule here conflicts with the org AGENTS.md, this file takes precedence.
+> This file extends the **[combsmith organization AGENTS.md](https://github.com/combsmith/.github/blob/main/AGENTS.md)** with Markets-specific conventions. The org standards define TDD, SOLID, CLEAN, DRY, DDD, KISS, YAGNI, pre-commit checks, CI gates, BMAD workflows, and multi-agent isolation. This file does not restate those — it specifies how they apply to this project's Go + React Native/Expo stack. If a rule here conflicts with the org AGENTS.md, this file takes precedence.
 >
 > For detailed Markets-specific application of each principle (bounded contexts, aggregate roots, repository interfaces, domain events, typed IDs, dependency direction, test-by-layer guidance, coverage thresholds, and CI commands), see `_bmad-output/planning-artifacts/coding-standards.md`.
 
@@ -152,7 +152,7 @@ theme: {
 
 ## Test-Driven Development
 
-TDD rules are defined in the [org AGENTS.md](https://github.com/petry-projects/.github/blob/main/AGENTS.md). Markets-specific test framework configuration, mocking strategy, coverage thresholds, and per-layer test guidance are in `_bmad-output/planning-artifacts/coding-standards.md`.
+TDD rules are defined in the [org AGENTS.md](https://github.com/combsmith/.github/blob/main/AGENTS.md). Markets-specific test framework configuration, mocking strategy, coverage thresholds, and per-layer test guidance are in `_bmad-output/planning-artifacts/coding-standards.md`.
 
 - **Go backend:** `*_test.go` co-located with source; `//go:build integration` for integration tests
 - **React Native frontend:** `*.test.tsx` co-located or `__tests__/`; Jest + React Native Testing Library
