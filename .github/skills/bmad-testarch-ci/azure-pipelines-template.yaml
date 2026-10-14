@@ -9,8 +9,9 @@
 #                       dependency needs preinstall/postinstall/prepare, add an explicit `npm rebuild <pkg>` step.
 #   TEST_CMD          - main test command (e.g., npm run test:e2e, npm test, npx vitest)
 #   LINT_CMD          - lint command (e.g., npm run lint)
-#   BROWSER_INSTALL   - browser install command using the lockfile-pinned local binary
-#                       (e.g., npx --no-install playwright install --with-deps chromium;
+#   BROWSER_INSTALL   - browser install command using the lockfile-pinned local binary; avoid npx,
+#                       which can resolve an unpinned copy from the npx cache or global bin
+#                       (e.g., ./node_modules/.bin/playwright install --with-deps chromium;
 #                       frontend/fullstack only; omit for backend)
 #   DEFAULT_NODE_VERSION - Node.js version (read from .nvmrc or default to 24)
 
@@ -98,7 +99,7 @@ stages:
             displayName: "Install dependencies" # Replace with INSTALL_CMD
 
           # Frontend/Fullstack only — skipped for backend-only stacks
-          - script: npx --no-install playwright install --with-deps chromium
+          - script: ./node_modules/.bin/playwright install --with-deps chromium
             condition: ne(variables['TEST_STACK_TYPE'], 'backend')
             displayName: "Install Playwright browsers" # Replace with BROWSER_INSTALL
 
@@ -140,7 +141,7 @@ stages:
             displayName: "Install dependencies" # Replace with INSTALL_CMD
 
           # Frontend/Fullstack only — skipped for backend-only stacks
-          - script: npx --no-install playwright install --with-deps chromium
+          - script: ./node_modules/.bin/playwright install --with-deps chromium
             condition: ne(variables['TEST_STACK_TYPE'], 'backend')
             displayName: "Install Playwright browsers" # Replace with BROWSER_INSTALL
 
