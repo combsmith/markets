@@ -2,10 +2,10 @@
 # apply-code-quality-ruleset.sh — Idempotently create/update the code-quality ruleset
 #
 # This script creates (or updates) the `code-quality` repository ruleset that
-# enforces required status checks on the default branch of petry-projects/markets.
+# enforces required status checks on the default branch of combsmith/markets.
 #
 # Required status checks configured (codified standard, source of truth:
-# petry-projects/.github/standards/rulesets/code-quality.json — see #326):
+# combsmith/.github/standards/rulesets/code-quality.json — see #326):
 #   - CodeQL                              CodeQL default setup analysis
 #   - SonarCloud                          sonarcloud.yml, job: sonarcloud (name: SonarCloud)
 #   - agent-shield / AgentShield          agent-shield.yml, caller job: agent-shield, reusable job: AgentShield
@@ -16,19 +16,19 @@
 #   - dependabot-automerge-petry (actor_id: 3167543, bypass_mode: always) enables Dependabot auto-merge
 #
 # Standard reference:
-#   https://github.com/petry-projects/.github/blob/main/standards/github-settings.md#code-quality--required-checks-ruleset-all-repositories
-#   https://github.com/petry-projects/.github/blob/main/standards/github-settings.md#bypass-actors--required-on-every-ruleset-targeting-main
+#   https://github.com/combsmith/.github/blob/main/standards/github-settings.md#code-quality--required-checks-ruleset-all-repositories
+#   https://github.com/combsmith/.github/blob/main/standards/github-settings.md#bypass-actors--required-on-every-ruleset-targeting-main
 #
 # Usage:
 #   GH_TOKEN=<admin-token> bash .github/scripts/apply-code-quality-ruleset.sh
 #
-# The org-level script (petry-projects/.github/scripts/apply-rulesets.sh) is the
+# The org-level script (combsmith/.github/scripts/apply-rulesets.sh) is the
 # canonical tool for managing rulesets across all repos. This script exists as a
 # repo-local reference and fallback for the markets repository specifically.
 
 set -euo pipefail
 
-REPO="petry-projects/markets"
+REPO="combsmith/markets"
 RULESET_NAME="code-quality"
 
 if [ -z "${GH_TOKEN:-}" ]; then

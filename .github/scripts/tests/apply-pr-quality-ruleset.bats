@@ -26,14 +26,14 @@ teardown() {
   grep -q 'set -euo pipefail' "$SCRIPT"
 }
 
-@test "script targets petry-projects/markets repo" {
-  grep -q 'petry-projects/markets' "$SCRIPT"
+@test "script targets combsmith/markets repo" {
+  grep -q 'combsmith/markets' "$SCRIPT"
 }
 
 @test "script generates correct ruleset payload" {
   gh() {
     if [ "$1" = "api" ]; then
-      if [ "$2" = "repos/petry-projects/markets/rulesets" ]; then
+      if [ "$2" = "repos/combsmith/markets/rulesets" ]; then
         echo ""
         return 0
       elif [ "$2" = "-X" ] && [ "$3" = "POST" ]; then

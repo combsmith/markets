@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # apply-secret-scanning-ai-detection.sh — Enable secret scanning AI detection
 #
-# This script enables secret_scanning_ai_detection on the petry-projects/markets
+# This script enables secret_scanning_ai_detection on the combsmith/markets
 # repository to satisfy the push-protection compliance requirement.
 #
 # The setting enables GitHub's AI-powered detection of secrets in commits, which
@@ -9,7 +9,7 @@
 # and credentials that don't match known patterns.
 #
 # Standard reference:
-#   https://github.com/petry-projects/.github/blob/main/standards/push-protection.md#required-repo-level-settings
+#   https://github.com/combsmith/.github/blob/main/standards/push-protection.md#required-repo-level-settings
 #
 # Usage:
 #   GH_TOKEN=<admin-token> bash .github/scripts/apply-secret-scanning-ai-detection.sh
@@ -20,7 +20,7 @@
 
 set -euo pipefail
 
-REPO="petry-projects/markets"
+REPO="combsmith/markets"
 
 if [ -z "${GH_TOKEN:-}" ]; then
   echo "ERROR: GH_TOKEN is required with administration:write scope" >&2

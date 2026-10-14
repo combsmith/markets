@@ -7,7 +7,7 @@
 
 ## Organization Standards (Required Reading)
 
-All development in this repository follows the **[petry-projects organization AGENTS.md](https://github.com/petry-projects/.github/blob/main/AGENTS.md)**. That document is the authoritative source for:
+All development in this repository follows the **[combsmith organization AGENTS.md](https://github.com/combsmith/.github/blob/main/AGENTS.md)**. That document is the authoritative source for:
 
 - **TDD** — Red-Green-Refactor workflow, coverage enforcement, no `.skip()`, no coverage-ignore comments
 - **SOLID** — SRP, OCP, LSP, ISP, DIP definitions and general guidance
@@ -690,7 +690,7 @@ Before marking a story as done:
 
 ## References
 
-- **[petry-projects Org AGENTS.md](https://github.com/petry-projects/.github/blob/main/AGENTS.md)** — Organization-wide engineering standards (TDD, SOLID, CLEAN, DRY, DDD, KISS, YAGNI, CI gates, BMAD)
+- **[combsmith Org AGENTS.md](https://github.com/combsmith/.github/blob/main/AGENTS.md)** — Organization-wide engineering standards (TDD, SOLID, CLEAN, DRY, DDD, KISS, YAGNI, CI gates, BMAD)
 - **Agents.md** — Project-level coding standards (component organization, styling, accessibility, anti-patterns)
 - **Architecture** — `_bmad-output/planning-artifacts/architecture.md`
 - **PRD** — `_bmad-output/planning-artifacts/prd.md`
