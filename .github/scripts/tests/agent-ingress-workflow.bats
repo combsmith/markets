@@ -5,7 +5,7 @@
 # Regression guard for the ADR-0007 pilot collapse (issue #506): the 5 Class-1
 # event-driven per-role caller stubs are replaced by ONE ingress with one thin
 # caller job per role. Source of truth is the collapse package in
-# petry-projects/.github-private docs/initiatives/agent-ingress-collapse-markets.md
+# combsmith/.github-private docs/initiatives/agent-ingress-collapse-markets.md
 # (§3 content, §2 eligible set + carve-outs, §4/ADR-0010 job-level concurrency).
 
 REPO_ROOT="$(cd "$(dirname "$BATS_TEST_FILENAME")/../../.." && pwd)"
@@ -39,7 +39,7 @@ ROLES=(dev-lead pr-auto-review pr-review pr-review-mention ci-failure-analyst)
     run yq ".jobs.\"$role\".if" "$WORKFLOW"
     [ "$status" -eq 0 ]
     cond="$output"
-    [[ "$uses" == petry-projects/*/.github/workflows/*.yml@* ]] || { printf '%s\n' "$role: bad uses: $uses"; return 1; }
+    [[ "$uses" == combsmith/*/.github/workflows/*.yml@* ]] || { printf '%s\n' "$role: bad uses: $uses"; return 1; }
     [[ "$cond" == *"github.event_name"* ]] || { printf '%s\n' "$role: if: missing event filter"; return 1; }
     run yq ".jobs.\"$role\" | has(\"steps\")" "$WORKFLOW"
     [ "$status" -eq 0 ]

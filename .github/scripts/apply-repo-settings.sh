@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 # apply-repo-settings.sh — Idempotently apply required repository settings
 #
-# Enforces all settings required by the petry-projects org standard:
-#   https://github.com/petry-projects/.github/blob/main/standards/github-settings.md#repository-settings--standard-defaults
+# Enforces all settings required by the combsmith org standard:
+#   https://github.com/combsmith/.github/blob/main/standards/github-settings.md#repository-settings--standard-defaults
 #
 # Usage:
 #   GH_TOKEN=<admin-token> bash .github/scripts/apply-repo-settings.sh
@@ -13,7 +13,7 @@
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-REPO="petry-projects/markets"
+REPO="combsmith/markets"
 
 if [ -z "${GH_TOKEN:-}" ]; then
   echo "ERROR: GH_TOKEN is required with administration:write scope" >&2

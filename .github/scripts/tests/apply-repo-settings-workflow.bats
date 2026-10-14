@@ -3,7 +3,7 @@
 # no live API calls.
 #
 # This workflow is now a THIN CALLER STUB synced from the org source of truth
-# (petry-projects/.github/standards/workflows/apply-repo-settings.yml). All
+# (combsmith/.github/standards/workflows/apply-repo-settings.yml). All
 # settings/ruleset logic — including the #420 GH_TOKEN preflight guard — moved
 # into the org reusable workflow (apply-repo-settings-reusable.yml); the consumer
 # repo carries no script copy and the caller job has no steps. These tests were
@@ -58,7 +58,7 @@ WORKFLOW="$(cd "$(dirname "$BATS_TEST_FILENAME")/../../.." && pwd)/.github/workf
   run yq '.jobs.apply.uses' "$WORKFLOW"
   [ "$status" -eq 0 ]
   [ "$output" != "null" ]
-  printf '%s\n' "$output" | grep -q 'petry-projects/.github/.github/workflows/apply-repo-settings-reusable.yml@'
+  printf '%s\n' "$output" | grep -q 'combsmith/.github/.github/workflows/apply-repo-settings-reusable.yml@'
 }
 
 @test "apply job carries no inline steps (logic lives in the reusable)" {

@@ -29,7 +29,7 @@ So that backend development can begin and all write operations are logged from t
 ### Task 1: Go Module Initialization
 
 - [ ] 1.1 Create `markets-api/` directory at project root
-- [ ] 1.2 Run `go mod init github.com/petry-projects/markets-api`
+- [ ] 1.2 Run `go mod init github.com/combsmith/markets-api`
 - [ ] 1.3 Run `go get github.com/99designs/gqlgen@latest`
 - [ ] 1.4 Run `go run github.com/99designs/gqlgen init` to scaffold the `graph/` directory
 - [ ] 1.5 Move `graph/` contents into `internal/graph/` to match production project structure
@@ -202,7 +202,7 @@ So that backend development can begin and all write operations are logged from t
 mkdir -p markets-api && cd markets-api
 
 # Initialize Go module
-go mod init github.com/petry-projects/markets-api
+go mod init github.com/combsmith/markets-api
 
 # Install gqlgen and initialize
 go get github.com/99designs/gqlgen@latest

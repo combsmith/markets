@@ -2,7 +2,7 @@
 # Tests for apply-code-quality-ruleset.sh — static content assertions, no live API calls.
 #
 # The required status check contexts asserted below are the codified standard
-# (petry-projects/.github/standards/rulesets/code-quality.json), the source of
+# (combsmith/.github/standards/rulesets/code-quality.json), the source of
 # truth referenced by issue #326.
 
 SCRIPT="$(cd "$(dirname "$BATS_TEST_FILENAME")/.." && pwd)/apply-code-quality-ruleset.sh"
@@ -22,8 +22,8 @@ assert_required_check() {
   grep -q 'set -euo pipefail' "$SCRIPT"
 }
 
-@test "script targets petry-projects/markets repo" {
-  grep -q 'petry-projects/markets' "$SCRIPT"
+@test "script targets combsmith/markets repo" {
+  grep -q 'combsmith/markets' "$SCRIPT"
 }
 
 @test "script declares the code-quality ruleset" {
@@ -50,7 +50,7 @@ assert_required_check() {
   export GH_TOKEN="mock-token"
   gh() {
     if [ "$1" = "api" ]; then
-      if [ "$2" = "repos/petry-projects/markets/rulesets" ]; then
+      if [ "$2" = "repos/combsmith/markets/rulesets" ]; then
         echo ""
         return 0
       elif [ "$2" = "-X" ] && [ "$3" = "POST" ]; then
@@ -73,13 +73,13 @@ assert_required_check() {
   export GH_TOKEN="mock-token"
   gh() {
     if [ "$1" = "api" ]; then
-      if [ "$2" = "repos/petry-projects/markets/rulesets" ]; then
+      if [ "$2" = "repos/combsmith/markets/rulesets" ]; then
         echo "999"
         return 0
-      elif [ "$2" = "repos/petry-projects/markets/rulesets/999" ] && [ "$3" = "--jq" ]; then
+      elif [ "$2" = "repos/combsmith/markets/rulesets/999" ] && [ "$3" = "--jq" ]; then
         echo '[{"actor_type":"RepositoryRole","bypass_mode":"pull_request"}]'
         return 0
-      elif [ "$2" = "-X" ] && [ "$3" = "PUT" ] && [ "$4" = "repos/petry-projects/markets/rulesets/999" ]; then
+      elif [ "$2" = "-X" ] && [ "$3" = "PUT" ] && [ "$4" = "repos/combsmith/markets/rulesets/999" ]; then
         cat > "$BATS_TEST_TMPDIR/payload.json"
         echo '{}'
         return 0
@@ -104,13 +104,13 @@ assert_required_check() {
   export GH_TOKEN="mock-token"
   gh() {
     if [ "$1" = "api" ]; then
-      if [ "$2" = "repos/petry-projects/markets/rulesets" ]; then
+      if [ "$2" = "repos/combsmith/markets/rulesets" ]; then
         echo "999"
         return 0
-      elif [ "$2" = "repos/petry-projects/markets/rulesets/999" ] && [ "$3" = "--jq" ]; then
+      elif [ "$2" = "repos/combsmith/markets/rulesets/999" ] && [ "$3" = "--jq" ]; then
         echo '[{"actor_type":"OrganizationAdmin","bypass_mode":"always"}]'
         return 0
-      elif [ "$2" = "-X" ] && [ "$3" = "PUT" ] && [ "$4" = "repos/petry-projects/markets/rulesets/999" ]; then
+      elif [ "$2" = "-X" ] && [ "$3" = "PUT" ] && [ "$4" = "repos/combsmith/markets/rulesets/999" ]; then
         cat > "$BATS_TEST_TMPDIR/payload.json"
         echo '{}'
         return 0
@@ -135,13 +135,13 @@ assert_required_check() {
   export GH_TOKEN="mock-token"
   gh() {
     if [ "$1" = "api" ]; then
-      if [ "$2" = "repos/petry-projects/markets/rulesets" ]; then
+      if [ "$2" = "repos/combsmith/markets/rulesets" ]; then
         echo "999"
         return 0
-      elif [ "$2" = "repos/petry-projects/markets/rulesets/999" ] && [ "$3" = "--jq" ]; then
+      elif [ "$2" = "repos/combsmith/markets/rulesets/999" ] && [ "$3" = "--jq" ]; then
         echo '[{"actor_id":3167543,"actor_type":"Integration","bypass_mode":"always"}]'
         return 0
-      elif [ "$2" = "-X" ] && [ "$3" = "PUT" ] && [ "$4" = "repos/petry-projects/markets/rulesets/999" ]; then
+      elif [ "$2" = "-X" ] && [ "$3" = "PUT" ] && [ "$4" = "repos/combsmith/markets/rulesets/999" ]; then
         cat > "$BATS_TEST_TMPDIR/payload.json"
         echo '{}'
         return 0
@@ -168,13 +168,13 @@ assert_required_check() {
   export GH_TOKEN="mock-token"
   gh() {
     if [ "$1" = "api" ]; then
-      if [ "$2" = "repos/petry-projects/markets/rulesets" ]; then
+      if [ "$2" = "repos/combsmith/markets/rulesets" ]; then
         echo "999"
         return 0
-      elif [ "$2" = "repos/petry-projects/markets/rulesets/999" ] && [ "$3" = "--jq" ]; then
+      elif [ "$2" = "repos/combsmith/markets/rulesets/999" ] && [ "$3" = "--jq" ]; then
         echo '[]'
         return 0
-      elif [ "$2" = "-X" ] && [ "$3" = "PUT" ] && [ "$4" = "repos/petry-projects/markets/rulesets/999" ]; then
+      elif [ "$2" = "-X" ] && [ "$3" = "PUT" ] && [ "$4" = "repos/combsmith/markets/rulesets/999" ]; then
         cat > "$BATS_TEST_TMPDIR/payload.json"
         echo '{}'
         return 0

@@ -1,6 +1,6 @@
 # Copilot Instructions — markets
 
-> **Note:** This file applies to the `petry-projects/markets` repository only. Org-wide rules are in [`petry-projects/.github/copilot-instructions.md`](https://github.com/petry-projects/.github/blob/main/.github/copilot-instructions.md). This file covers only what is specific to markets.
+> **Note:** This file applies to the `combsmith/markets` repository only. Org-wide rules are in [`combsmith/.github/copilot-instructions.md`](https://github.com/combsmith/.github/blob/main/.github/copilot-instructions.md). This file covers only what is specific to markets.
 
 ## About
 
@@ -76,7 +76,7 @@ assets/                # Images, fonts
 
 ## Org Standards
 
-See [petry-projects/.github — AGENTS.md](https://github.com/petry-projects/.github/blob/main/AGENTS.md) for org-wide development standards.
+See [combsmith/.github — AGENTS.md](https://github.com/combsmith/.github/blob/main/AGENTS.md) for org-wide development standards.
 
 **Language-specific instructions** (applied automatically by Copilot when you open matching file types):
 
