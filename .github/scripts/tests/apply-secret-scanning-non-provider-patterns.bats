@@ -13,8 +13,8 @@ SCRIPT="$(cd "$(dirname "$BATS_TEST_FILENAME")/.." && pwd)/apply-secret-scanning
   grep -q 'set -euo pipefail' "$SCRIPT"
 }
 
-@test "script targets petry-projects/markets repo" {
-  grep -q 'petry-projects/markets' "$SCRIPT"
+@test "script targets combsmith/markets repo" {
+  grep -q 'combsmith/markets' "$SCRIPT"
 }
 
 @test "script PATCHes secret_scanning_non_provider_patterns to enabled" {

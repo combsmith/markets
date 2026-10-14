@@ -128,7 +128,7 @@ npx create-expo-app@latest markets-app --template tabs
 
 ```bash
 mkdir markets-api && cd markets-api
-go mod init github.com/petry-projects/markets-api
+go mod init github.com/combsmith/markets-api
 go get github.com/99designs/gqlgen@latest
 go run github.com/99designs/gqlgen init
 ```

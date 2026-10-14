@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # apply-secret-scanning-non-provider-patterns.sh — Enable secret scanning non-provider patterns
 #
-# This script enables secret_scanning_non_provider_patterns on the petry-projects/markets
+# This script enables secret_scanning_non_provider_patterns on the combsmith/markets
 # repository to satisfy the push-protection compliance requirement.
 #
 # The setting enables GitHub's detection of secrets that match generic, non-provider-specific
@@ -9,7 +9,7 @@
 # that are not covered by provider-specific patterns.
 #
 # Standard reference:
-#   https://github.com/petry-projects/.github/blob/main/standards/push-protection.md#required-repo-level-settings
+#   https://github.com/combsmith/.github/blob/main/standards/push-protection.md#required-repo-level-settings
 #
 # Usage:
 #   GH_TOKEN=<admin-token> bash .github/scripts/apply-secret-scanning-non-provider-patterns.sh
@@ -20,7 +20,7 @@
 
 set -euo pipefail
 
-REPO="petry-projects/markets"
+REPO="combsmith/markets"
 
 if [[ -z "${GH_TOKEN:-}" ]]; then
   echo "ERROR: GH_TOKEN is required with administration:write scope" >&2

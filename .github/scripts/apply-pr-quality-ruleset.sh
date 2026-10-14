@@ -3,17 +3,17 @@
 #
 # This script creates (or updates) the `pr-quality` repository ruleset that
 # enforces pull-request review quality gates on the default branch of
-# petry-projects/markets.
+# combsmith/markets.
 #
 # Pull-request rule parameters configured (codified standard, source of truth:
-# petry-projects/.github/standards/rulesets/pr-quality.json — see #575/#580):
+# combsmith/.github/standards/rulesets/pr-quality.json — see #575/#580):
 #   - required_approving_review_count: 1     at least one approving review
 #   - require_code_owner_review: true        CODEOWNERS must approve
 #                                             (drift fix — see #401)
 #   - required_review_thread_resolution: true  all review threads resolved
 #   - dismiss_stale_reviews_on_push: true    new pushes invalidate approvals
 #                                             (source-of-truth: pr-quality.json in
-#                                              petry-projects/.github; this repo-local
+#                                              combsmith/.github; this repo-local
 #                                              script is a reference/fallback — re-run
 #                                              corrects live drift only when GH_TOKEN
 #                                              has administration:write access — #402)
@@ -22,18 +22,18 @@
 #   - allowed_merge_methods: ["squash"]      squash-only merges
 #
 # Standard reference:
-#   https://github.com/petry-projects/.github/blob/main/standards/github-settings.md#pr-quality--standard-ruleset-all-repositories
+#   https://github.com/combsmith/.github/blob/main/standards/github-settings.md#pr-quality--standard-ruleset-all-repositories
 #
 # Usage:
 #   GH_TOKEN=<admin-token> bash .github/scripts/apply-pr-quality-ruleset.sh
 #
-# The org-level script (petry-projects/.github/scripts/apply-rulesets.sh) is the
+# The org-level script (combsmith/.github/scripts/apply-rulesets.sh) is the
 # canonical tool for managing rulesets across all repos. This script exists as a
 # repo-local reference and fallback for the markets repository specifically.
 
 set -euo pipefail
 
-REPO="petry-projects/markets"
+REPO="combsmith/markets"
 RULESET_NAME="pr-quality"
 
 if [[ -z "${GH_TOKEN:-}" ]]; then
