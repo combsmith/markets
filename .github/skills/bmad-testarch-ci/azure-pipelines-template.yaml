@@ -5,8 +5,10 @@
 #
 # Variables to customize per project:
 #   INSTALL_CMD       - dependency install command (e.g., npm ci --ignore-scripts, pnpm install --frozen-lockfile --ignore-scripts)
-#                       NOTE: --ignore-scripts skips dependency lifecycle scripts (SonarCloud S6505); if a
-#                       dependency needs preinstall/postinstall/prepare, add an explicit `npm rebuild <pkg>` step.
+#                       NOTE: --ignore-scripts skips ALL lifecycle scripts — both dependency scripts (preinstall/postinstall/prepare)
+#                       AND root-package hooks (SonarCloud S6505). For dependencies needing lifecycle scripts, add explicit
+#                       `npm rebuild <pkg>` steps. For root-package scripts (e.g., prepare hooks), run them as separate steps
+#                       (e.g., `npm run prepare` if needed for your stack).
 #   TEST_CMD          - main test command (e.g., npm run test:e2e, npm test, npx vitest)
 #   LINT_CMD          - lint command (e.g., npm run lint)
 #   BROWSER_INSTALL   - browser install command using the lockfile-pinned local binary; avoid npx,
