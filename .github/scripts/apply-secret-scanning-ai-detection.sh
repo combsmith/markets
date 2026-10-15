@@ -22,7 +22,7 @@ set -euo pipefail
 
 REPO="combsmith/markets"
 
-if [ -z "${GH_TOKEN:-}" ]; then
+if [[ -z "${GH_TOKEN:-}" ]]; then
   echo "ERROR: GH_TOKEN is required with administration:write scope" >&2
   exit 1
 fi
