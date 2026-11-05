@@ -2,7 +2,8 @@
 
 [![Contributing](https://img.shields.io/badge/contributions-welcome-brightgreen.svg)](https://github.com/combsmith/.github/blob/main/CONTRIBUTING.md)
 
-Financial markets data, automated polling, and agent workflows.
+Market-day coordination for local farmer and art markets: vendors post quick status and product updates,
+managers validate and publish them, and customers see what's at the market today.
 
 ## License
 
@@ -15,19 +16,27 @@ Markets is dual-licensed:
 
 ## Commercial Support & Licensing
 
-Need enterprise SLAs, custom market connectors, automated data pipelines, or a proprietary commercial license?
+This project is open source and free for the community. For market operators, market networks, and organizations
+deploying Markets in production, commercial support, custom engineering, and proprietary licensing are provided
+through [CombSmith LLC](https://combsmith.com):
 
-Commercial licensing and support are offered through **[CombSmith LLC](https://combsmith.com)**:
-- **Commercial Licensing:** Closed-source and proprietary deployment rights exempt from AGPL copyleft obligations.
-- **Enterprise Support SLAs:** Priority bug fixes, dedicated maintenance windows, and security updates.
-- **Custom Integrations:** Bespoke financial feeds, automated trading connectors, and agentic workflows.
-- **Consulting & Implementation:** Architecture design, local-first ledger integrations, and cloud deployments.
+- **Standard SLA & Priority Support:** $199/month per organization
+  - Guaranteed 24-hour issue triage
+  - Dedicated private communications channel
+  - Upstream bug-fix and security patch prioritization
+- **Custom Engineering & Architecture Advisory:** $250/hour
+  - Hosted deployment, white-labelling, and onboarding for your markets, vendors, and managers
+  - Integrations with existing vendor rosters, market websites, and social channels
+  - Security audit and containerized deployment assistance
+- **Commercial Licensing:** Custom quote
+  - Closed-source and proprietary deployment rights exempt from AGPL copyleft obligations
+  - Custom warranties and indemnification
 
-For commercial inquiries, email [support@combsmith.com](mailto:support@combsmith.com) or visit [combsmith.com](https://combsmith.com).
+For commercial invoicing, custom service agreements, or enterprise purchase orders, contact
+[support@combsmith.com](mailto:support@combsmith.com) or visit [combsmith.com](https://combsmith.com).
 
 ---
 
 ### Contributing
 
 By contributing to this project, you agree to the org-wide [Contributing Guide](https://github.com/combsmith/.github/blob/main/CONTRIBUTING.md) and the project's [Contributor License Agreement](CLA.md).
-
