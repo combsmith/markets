@@ -171,6 +171,13 @@ ROLES=(dev-lead pr-auto-review pr-review pr-review-mention ci-failure-analyst)
     || { printf '%s\n' "pr-auto-review: Dependabot guard does not gate the whole subscription: $flat"; return 1; }
 }
 
+@test "pr-review skips Dependabot-sent events, which run without secrets (#544)" {
+  run yq '.jobs.pr-review.if' "$WORKFLOW"
+  [ "$status" -eq 0 ]
+  [[ "$output" == *"github.event.sender.id != 49699333"* ]]
+  [[ "$output" != *"github.actor"* ]]
+}
+
 @test "if: guards never read repo state (vars/secrets/needs/hashFiles)" {
   for role in "${ROLES[@]}"; do
     run yq ".jobs.\"$role\".if" "$WORKFLOW"

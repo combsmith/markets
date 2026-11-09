@@ -120,7 +120,9 @@ jobs:
   # ── pr-review ─────────────────────────────────────────────────────────────────
   pr-review:
     # Subscription filter AND the source stub's check_suite-with-no-PR skip, both
-    # pure event predicates over the delivered payload.
+    # pure event predicates over the delivered payload, AND the same Dependabot
+    # sender skip as pr-auto-review (#544): Dependabot-triggered runs get no repo
+    # secrets, so `secrets: inherit` would hand the reusable no Claude credentials.
     if: >-
       (
         (github.event_name == 'pull_request'
@@ -132,6 +134,7 @@ jobs:
         || (github.event_name == 'repository_dispatch' && github.event.action == 'pr-review-mention')
       )
       && (github.event_name != 'check_suite' || github.event.check_suite.pull_requests[0] != null)
+      && github.event.sender.id != 49699333
     # Job-level concurrency, bounded per ADR-0010: payload parts only (no inputs.*,
     # no run_id). A sweep with no PR shares the 'enumerate' slot. The fallback is
     # NOT 'batch', because the pinned reusable declares pr-review-batch (§4b).
