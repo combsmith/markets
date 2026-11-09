@@ -82,13 +82,20 @@ jobs:
 
   # ── pr-auto-review ──────────────────────────────────────────────────────────
   pr-auto-review:
+    # Subscription filter AND a Dependabot-sender skip (#544): runs that Dependabot
+    # triggers get no repo secrets, so GH_PAT_WORKFLOWS is empty and the reusable's
+    # tooling checkout fails. Dependabot PRs are handled by dependabot-automerge.
+    # sender.login is a payload predicate (github.actor is not an event filter).
     if: >-
-      (github.event_name == 'pull_request'
-        && contains(fromJSON('["opened","reopened","synchronize","ready_for_review"]'), github.event.action))
-      || (github.event_name == 'pull_request_review'
-          && contains(fromJSON('["submitted","dismissed"]'), github.event.action))
-      || github.event_name == 'check_suite'
-      || github.event_name == 'workflow_run'
+      (
+        (github.event_name == 'pull_request'
+          && contains(fromJSON('["opened","reopened","synchronize","ready_for_review"]'), github.event.action))
+        || (github.event_name == 'pull_request_review'
+            && contains(fromJSON('["submitted","dismissed"]'), github.event.action))
+        || github.event_name == 'check_suite'
+        || github.event_name == 'workflow_run'
+      )
+      && github.event.sender.login != 'dependabot[bot]'
     # Workflow-level concurrency in the source stub → job-level here, bounded per
     # ADR-0010: literal role prefix, payload parts only (no run_id), literal bool.
     # PR events keep their per-PR slot; check_suite / workflow_run use their own

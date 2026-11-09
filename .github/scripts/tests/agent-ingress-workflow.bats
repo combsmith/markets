@@ -152,6 +152,25 @@ ROLES=(dev-lead pr-auto-review pr-review pr-review-mention ci-failure-analyst)
   [[ "$output" == *"!startsWith(github.event.check_run.name, 'ci-failure-analyst')"* ]]
 }
 
+@test "pr-auto-review skips Dependabot-sent events, which run without secrets (#544)" {
+  # Dependabot-triggered runs receive no repo secrets, so the reusable's tooling
+  # checkout gets an empty token and fails ('Input required and not supplied:
+  # token'). The guard must be a pure payload predicate (not github.actor, which
+  # validate-ingress-if.sh forbids) and must AND the whole subscription.
+  run yq '.jobs.pr-auto-review.if' "$WORKFLOW"
+  [ "$status" -eq 0 ]
+  local cond="$output"
+  [[ "$cond" == *"github.event.sender.login != 'dependabot[bot]'"* ]] \
+    || { printf '%s\n' "pr-auto-review: missing Dependabot sender guard"; return 1; }
+  [[ "$cond" != *"github.actor"* ]] \
+    || { printf '%s\n' "pr-auto-review: if: reads github.actor (not a pure event filter)"; return 1; }
+  # Subscription is parenthesised and the guard is ANDed after it.
+  local flat
+  flat="$(printf '%s' "$cond" | tr -s '[:space:]' ' ')"
+  [[ "$flat" =~ \)[[:space:]]*\&\&[[:space:]]*github\.event\.sender\.login[[:space:]]*!=[[:space:]]*\'dependabot\[bot\]\'[[:space:]]*$ ]] \
+    || { printf '%s\n' "pr-auto-review: Dependabot guard does not gate the whole subscription: $flat"; return 1; }
+}
+
 @test "if: guards never read repo state (vars/secrets/needs/hashFiles)" {
   for role in "${ROLES[@]}"; do
     run yq ".jobs.\"$role\".if" "$WORKFLOW"
