@@ -85,7 +85,7 @@ jobs:
     # Subscription filter AND a Dependabot-sender skip (#544): runs that Dependabot
     # triggers get no repo secrets, so GH_PAT_WORKFLOWS is empty and the reusable's
     # tooling checkout fails. Dependabot PRs are handled by dependabot-automerge.
-    # sender.login is a payload predicate (github.actor is not an event filter).
+    # sender.id (49699333 = dependabot[bot], a non-forgeable numeric id) is a payload predicate (github.actor is not an event filter).
     if: >-
       (
         (github.event_name == 'pull_request'
@@ -95,7 +95,7 @@ jobs:
         || github.event_name == 'check_suite'
         || github.event_name == 'workflow_run'
       )
-      && github.event.sender.login != 'dependabot[bot]'
+      && github.event.sender.id != 49699333
     # Workflow-level concurrency in the source stub → job-level here, bounded per
     # ADR-0010: literal role prefix, payload parts only (no run_id), literal bool.
     # PR events keep their per-PR slot; check_suite / workflow_run use their own

@@ -160,14 +160,14 @@ ROLES=(dev-lead pr-auto-review pr-review pr-review-mention ci-failure-analyst)
   run yq '.jobs.pr-auto-review.if' "$WORKFLOW"
   [ "$status" -eq 0 ]
   local cond="$output"
-  [[ "$cond" == *"github.event.sender.login != 'dependabot[bot]'"* ]] \
+  [[ "$cond" == *"github.event.sender.id != 49699333"* ]] \
     || { printf '%s\n' "pr-auto-review: missing Dependabot sender guard"; return 1; }
   [[ "$cond" != *"github.actor"* ]] \
     || { printf '%s\n' "pr-auto-review: if: reads github.actor (not a pure event filter)"; return 1; }
   # Subscription is parenthesised and the guard is ANDed after it.
   local flat
   flat="$(printf '%s' "$cond" | tr -s '[:space:]' ' ')"
-  [[ "$flat" =~ \)[[:space:]]*\&\&[[:space:]]*github\.event\.sender\.login[[:space:]]*!=[[:space:]]*\'dependabot\[bot\]\'[[:space:]]*$ ]] \
+  [[ "$flat" =~ \)[[:space:]]*\&\&[[:space:]]*github\.event\.sender\.id[[:space:]]*!=[[:space:]]*49699333[[:space:]]*$ ]] \
     || { printf '%s\n' "pr-auto-review: Dependabot guard does not gate the whole subscription: $flat"; return 1; }
 }
 
