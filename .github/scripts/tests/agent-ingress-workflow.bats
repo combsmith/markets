@@ -176,8 +176,16 @@ ROLES=(dev-lead pr-auto-review pr-review pr-review-mention ci-failure-analyst)
 @test "pr-review skips Dependabot-sent events, which run without secrets (#544)" {
   run yq '.jobs.pr-review.if' "$WORKFLOW"
   [ "$status" -eq 0 ]
-  [[ "$output" == *"github.event.sender.id != 49699333"* ]]
-  [[ "$output" != *"github.actor"* ]]
+  local cond="$output"
+  [[ "$cond" == *"github.event.sender.id != 49699333"* ]]
+  [[ "$cond" != *"github.actor"* ]]
+  # The guard must be ANDed after the whole subscription, so an accidental `||`
+  # or branch-local guard cannot let Dependabot events through.
+  local flat regex
+  flat="$(printf '%s' "$cond" | tr -s '[:space:]' ' ')"
+  regex='\)[[:space:]]*&&[[:space:]]*github\.event\.sender\.id[[:space:]]*!=[[:space:]]*49699333[[:space:]]*$'
+  [[ "$flat" =~ $regex ]] \
+    || { printf '%s\n' "pr-review: Dependabot guard does not gate the whole subscription: $flat"; return 1; }
 }
 
 @test "if: guards never read repo state (vars/secrets/needs/hashFiles)" {
