@@ -177,8 +177,10 @@ ROLES=(dev-lead pr-auto-review pr-review pr-review-mention ci-failure-analyst)
   run yq '.jobs.pr-review.if' "$WORKFLOW"
   [ "$status" -eq 0 ]
   local cond="$output"
-  [[ "$cond" == *"github.event.sender.id != 49699333"* ]]
-  [[ "$cond" != *"github.actor"* ]]
+  [[ "$cond" == *"github.event.sender.id != 49699333"* ]] \
+    || { printf '%s\n' "pr-review: missing Dependabot sender guard"; return 1; }
+  [[ "$cond" != *"github.actor"* ]] \
+    || { printf '%s\n' "pr-review: if: reads github.actor (not a pure event filter)"; return 1; }
   # The guard must be ANDed after the whole subscription, so an accidental `||`
   # or branch-local guard cannot let Dependabot events through.
   local flat regex
