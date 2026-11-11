@@ -165,9 +165,11 @@ ROLES=(dev-lead pr-auto-review pr-review pr-review-mention ci-failure-analyst)
   [[ "$cond" != *"github.actor"* ]] \
     || { printf '%s\n' "pr-auto-review: if: reads github.actor (not a pure event filter)"; return 1; }
   # Subscription is parenthesised and the guard is ANDed after it.
-  local flat
+  # Regex lives in a variable so parsing is stable across bash versions (3.2 vs 5).
+  local flat regex
   flat="$(printf '%s' "$cond" | tr -s '[:space:]' ' ')"
-  [[ "$flat" =~ \)[[:space:]]*\&\&[[:space:]]*github\.event\.sender\.id[[:space:]]*!=[[:space:]]*49699333[[:space:]]*$ ]] \
+  regex='\)[[:space:]]*&&[[:space:]]*github\.event\.sender\.id[[:space:]]*!=[[:space:]]*49699333[[:space:]]*$'
+  [[ "$flat" =~ $regex ]] \
     || { printf '%s\n' "pr-auto-review: Dependabot guard does not gate the whole subscription: $flat"; return 1; }
 }
 
