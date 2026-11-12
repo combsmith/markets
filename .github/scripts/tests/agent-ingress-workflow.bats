@@ -152,6 +152,44 @@ ROLES=(dev-lead pr-auto-review pr-review pr-review-mention ci-failure-analyst)
   [[ "$output" == *"!startsWith(github.event.check_run.name, 'ci-failure-analyst')"* ]]
 }
 
+@test "pr-auto-review skips Dependabot-sent events, which run without secrets (#544)" {
+  # Dependabot-triggered runs receive no repo secrets, so the reusable's tooling
+  # checkout gets an empty token and fails ('Input required and not supplied:
+  # token'). The guard must be a pure payload predicate (not github.actor, which
+  # validate-ingress-if.sh forbids) and must AND the whole subscription.
+  run yq '.jobs.pr-auto-review.if' "$WORKFLOW"
+  [ "$status" -eq 0 ]
+  local cond="$output"
+  [[ "$cond" == *"github.event.sender.id != 49699333"* ]] \
+    || { printf '%s\n' "pr-auto-review: missing Dependabot sender guard"; return 1; }
+  [[ "$cond" != *"github.actor"* ]] \
+    || { printf '%s\n' "pr-auto-review: if: reads github.actor (not a pure event filter)"; return 1; }
+  # Subscription is parenthesised and the guard is ANDed after it.
+  # Regex lives in a variable so parsing is stable across bash versions (3.2 vs 5).
+  local flat regex
+  flat="$(printf '%s' "$cond" | tr -s '[:space:]' ' ')"
+  regex='\)[[:space:]]*&&[[:space:]]*github\.event\.sender\.id[[:space:]]*!=[[:space:]]*49699333[[:space:]]*$'
+  [[ "$flat" =~ $regex ]] \
+    || { printf '%s\n' "pr-auto-review: Dependabot guard does not gate the whole subscription: $flat"; return 1; }
+}
+
+@test "pr-review skips Dependabot-sent events, which run without secrets (#544)" {
+  run yq '.jobs.pr-review.if' "$WORKFLOW"
+  [ "$status" -eq 0 ]
+  local cond="$output"
+  [[ "$cond" == *"github.event.sender.id != 49699333"* ]] \
+    || { printf '%s\n' "pr-review: missing Dependabot sender guard"; return 1; }
+  [[ "$cond" != *"github.actor"* ]] \
+    || { printf '%s\n' "pr-review: if: reads github.actor (not a pure event filter)"; return 1; }
+  # The guard must be ANDed after the whole subscription, so an accidental `||`
+  # or branch-local guard cannot let Dependabot events through.
+  local flat regex
+  flat="$(printf '%s' "$cond" | tr -s '[:space:]' ' ')"
+  regex='\)[[:space:]]*&&[[:space:]]*github\.event\.sender\.id[[:space:]]*!=[[:space:]]*49699333[[:space:]]*$'
+  [[ "$flat" =~ $regex ]] \
+    || { printf '%s\n' "pr-review: Dependabot guard does not gate the whole subscription: $flat"; return 1; }
+}
+
 @test "if: guards never read repo state (vars/secrets/needs/hashFiles)" {
   for role in "${ROLES[@]}"; do
     run yq ".jobs.\"$role\".if" "$WORKFLOW"
